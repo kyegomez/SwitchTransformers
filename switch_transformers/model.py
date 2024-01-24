@@ -269,6 +269,20 @@ class SwitchTransformer(nn.Module):
         *args,
         **kwargs,
     ):
+        """
+        SwitchTransformer is a PyTorch module that implements a transformer model with switchable experts.
+
+        Args:
+            num_tokens (int): The number of tokens in the input vocabulary.
+            dim (int): The dimensionality of the token embeddings and hidden states.
+            heads (int): The number of attention heads.
+            dim_head (int, optional): The dimensionality of each attention head. Defaults to 64.
+            mult (int, optional): The multiplier for the hidden dimension in the feed-forward network. Defaults to 4.
+            dropout (float, optional): The dropout rate. Defaults to 0.1.
+            num_experts (int, optional): The number of experts in the switchable experts mechanism. Defaults to 3.
+            *args: Additional positional arguments.
+            **kwargs: Additional keyword arguments.
+        """
         super().__init__()
         self.num_tokens = num_tokens
         self.dim = dim
@@ -297,7 +311,16 @@ class SwitchTransformer(nn.Module):
             nn.Linear(dim, num_tokens),
         )
 
-    def forward(self, x: Tensor):
+    def forward(self, x: Tensor) -> Tensor:
+        """
+        Forward pass of the SwitchTransformer.
+
+        Args:
+            x (Tensor): The input tensor of shape (batch_size, sequence_length).
+
+        Returns:
+            Tensor: The output tensor of shape (batch_size, sequence_length, num_tokens).
+        """
         # Embed tokens through embedding layer
         x = self.embedding(x)
         # Pass through the transformer block with MoE
@@ -308,9 +331,3 @@ class SwitchTransformer(nn.Module):
         return x
 
 
-x = torch.randint(0, 100, (1, 10))
-model = SwitchTransformer(
-    num_tokens=100, dim=512, heads=8, dim_head=64
-)
-out = model(x)
-print(out.shape)
