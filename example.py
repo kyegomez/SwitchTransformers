@@ -1,5 +1,5 @@
 import torch
-from switch_transformers import SwitchTransformer
+from switch_transformers.model import SwitchTransformer
 
 # Generate a random tensor of shape (1, 10) with values between 0 and 100
 x = torch.randint(0, 100, (1, 10))
