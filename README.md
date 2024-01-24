@@ -9,7 +9,7 @@ Implementation of Switch Transformers from the paper: "Switch Transformers: Scal
 ## Installation
 
 ```bash
-pip install -e .
+pip install switch-transformers
 ```
 
 # Usage
